@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VULCAN — Volcano Science</title>
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLb(event)">
+  <button class="lb-close" onclick="closeLb()">&#10005;</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Tu Carrito</h3>
+    <button class="cart-close" onclick="closeCart()">&#10005;</button>
+  </div>
+  <div class="cart-items-wrap" id="cartItemsWrap">
+    <div class="cart-empty"><p>Tu carrito est&#225; vac&#237;o</p></div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <strong id="cartTotal">0,00 &#8364;</strong>
+    </div>
+    <a href="#" class="btn-checkout" onclick="alert('Proceso de pago en desarrollo. ¡Gracias por tu interés en VULCAN!');return false">Finalizar Compra</a>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">&#10005;</button>
+    <div class="modal-inner" id="modalInner"></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="showPage('home');return false">
+    <img src="assets/images/logo_vulcan.png" alt="VULCAN — Volcano Science">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('home');return false" data-page="home">Home</a></li>
+    <li><a href="#" onclick="showPage('producto');return false" data-page="producto">Producto</a></li>
+    <li><a href="#" onclick="showPage('manifiesto');return false" data-page="manifiesto">Manifiesto</a></li>
+    <li><a href="#" onclick="showPage('contacto');return false" data-page="contacto">Contacto</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button class="cart-btn" onclick="openCart()">
+      Carrito
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="burger" id="burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div id="mobNav">
+  <button class="mob-close" onclick="closeMobNav()">&#10005;</button>
+  <a href="#" onclick="showPage('home');return false" data-mob-page="home">Home</a>
+  <a href="#" onclick="showPage('producto');return false" data-mob-page="producto">Producto</a>
+  <a href="#" onclick="showPage('manifiesto');return false" data-mob-page="manifiesto">Manifiesto</a>
+  <a href="#" onclick="showPage('contacto');return false" data-mob-page="contacto">Contacto</a>
+</div>
+
+<!-- ========================= HOME ========================= -->
+<div class="page active" id="page-home">
+
+  <!-- Hero con vídeo -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="assets/video/demo.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">La Palma &middot; Islas Canarias &middot; Espa&ntilde;a</p>
+      <div class="hero-logo-wrap">
+        <img src="assets/images/logo_vulcan.png" alt="VULCAN Volcano Science" class="hero-logo-img">
+      </div>
+      <p class="hero-tagline">Cosm&eacute;tica Volc&aacute;nica Genderless</p>
+      <a href="#" class="hero-cta" onclick="showPage('producto');return false">Descubrir la Gama</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Ticker (loop perfecto: 2 copias exactas → translateX(-50%)) -->
+  <div class="ticker-strip" aria-hidden="true">
+    <div class="ticker-track" id="ticker">
+      <span>Volcano Science</span><span class="dot"></span>
+      <span>Cosm&eacute;tica Genderless</span><span class="dot"></span>
+      <span>La Palma, Canarias</span><span class="dot"></span>
+      <span>Pentaward Bronze 2025</span><span class="dot"></span>
+      <span>Ingredientes KM0</span><span class="dot"></span>
+      <span>Ecodise&ntilde;o</span><span class="dot"></span>
+      <span>Artesanal</span><span class="dot"></span>
+      <!-- Copia idéntica para loop perfecto -->
+      <span>Volcano Science</span><span class="dot"></span>
+      <span>Cosm&eacute;tica Genderless</span><span class="dot"></span>
+      <span>La Palma, Canarias</span><span class="dot"></span>
+      <span>Pentaward Bronze 2025</span><span class="dot"></span>
+      <span>Ingredientes KM0</span><span class="dot"></span>
+      <span>Ecodise&ntilde;o</span><span class="dot"></span>
+      <span>Artesanal</span><span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- Premios -->
+  <section class="awards-home">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Reconocimientos</span>
+        <h2>Reconocida a nivel <strong>mundial</strong></h2>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:0 auto;padding:0 52px">
+      <div class="awards-grid-home">
+        <a class="award-card reveal-l" href="https://brandea.es/vulcan-del-fuego-al-bronce/" target="_blank" rel="noopener" style="text-decoration:none;cursor:none">
+          <img src="assets/images/pentaward.webp" alt="Pentaward Bronze 2025" class="award-img">
+          <div class="award-info">
+            <span class="alabel">Reconocimiento Internacional</span>
+            <h3>Pentaward Bronze 2025</h3>
+            <p>Premio internacional de dise&ntilde;o de packaging. VULCAN reconocida entre las marcas con el dise&ntilde;o de envase m&aacute;s innovador del a&ntilde;o a nivel mundial.</p>
+          </div>
+        </a>
+        <a class="award-card reveal-r" href="https://adg-fad.org/ca/laus/proyecto/vulcan-volcano-science/?fq=6fc1618e84a4" target="_blank" rel="noopener" style="text-decoration:none;cursor:none">
+          <img src="assets/images/laus.webp" alt="ADG Laus 2025" class="award-img">
+          <div class="award-info">
+            <span class="alabel">Reconocimiento Nacional</span>
+            <h3>ADG Laus 2025</h3>
+            <p>Los premios Laus reconocen la excelencia en dise&ntilde;o gr&aacute;fico y comunicaci&oacute;n visual en Espa&ntilde;a. VULCAN, finalista en la categor&iacute;a de dise&ntilde;o de marca y packaging.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax 1 -->
+  <div class="parallax-block" data-px>
+    <div class="px-bg" style="background-image:url('assets/images/wow.webp')"></div>
+    <div class="px-dim"></div>
+    <div class="px-content">
+      <h2>RENACER</h2>
+      <p>La fuerza de la naturaleza volc&aacute;nica,<br>transformada en ritual de belleza</p>
+    </div>
+  </div>
+
+  <!-- Productos preview -->
+  <section class="products-preview">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">La Gama</span>
+        <h2>Cuatro productos,<br>una sola <strong>filosof&iacute;a</strong></h2>
+        <p>Formulados con ingredientes volc&aacute;nicos y materiales 100% sostenibles. Dise&ntilde;ados para todos, sin excepci&oacute;n.</p>
+      </div>
+    </div>
+    <div class="products-grid">
+      <div class="product-thumb reveal" onclick="showPage('producto')">
+        <img src="assets/images/eyecontour1-hq.webp" alt="Eye Contour">
+        <div class="product-thumb-overlay">
+          <span class="product-thumb-tag" style="color:#847AB0">Eye Contour</span>
+          <h3>Eye Contour</h3>
+          <p>Contorno de Ojos Regenerador</p>
+          <span class="product-thumb-arrow">Ver producto &#8594;</span>
+        </div>
+      </div>
+      <div class="product-thumb reveal" onclick="showPage('producto')">
+        <img src="assets/images/facialserum1-hq.webp" alt="Facial Serum">
+        <div class="product-thumb-overlay">
+          <span class="product-thumb-tag" style="color:#BE9755">Facial Serum</span>
+          <h3>Facial Serum</h3>
+          <p>S&eacute;rum Facial de Minerales Volc&aacute;nicos</p>
+          <span class="product-thumb-arrow">Ver producto &#8594;</span>
+        </div>
+      </div>
+      <div class="product-thumb reveal" onclick="showPage('producto')">
+        <img src="assets/images/activemask1-hq.webp" alt="Active Mask">
+        <div class="product-thumb-overlay">
+          <span class="product-thumb-tag" style="color:#D86F2A">Active Mask</span>
+          <h3>Active Mask</h3>
+          <p>Mascarilla Activa Volc&aacute;nica</p>
+          <span class="product-thumb-arrow">Ver producto &#8594;</span>
+        </div>
+      </div>
+      <div class="product-thumb reveal" onclick="showPage('producto')">
+        <img src="assets/images/facecream1-hq.webp" alt="Face Cream">
+        <div class="product-thumb-overlay">
+          <span class="product-thumb-tag" style="color:#8CC581">Face Cream</span>
+          <h3>Face Cream</h3>
+          <p>Crema Facial Nutritiva Volc&aacute;nica</p>
+          <span class="product-thumb-arrow">Ver producto &#8594;</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="#" class="hero-cta" onclick="showPage('producto');return false">Ver Todos los Productos</a>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:60px">
+        <span class="section-label">Nuestra Esencia</span>
+        <h2>Los valores que nos <strong>definen</strong></h2>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-item reveal">
+        <div class="value-icon">
+          <svg viewBox="0 0 36 36" fill="none" stroke="#BE9755" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2 L33 32 L3 32 Z"/>
+            <path d="M18 2 C16 7 14 9 14 12 C14 15 18 16 18 16 C18 16 22 15 22 12 C22 9 20 7 18 2Z"/>
+          </svg>
+        </div>
+        <h3>Resiliencia</h3>
+        <p>Como la lava que se enfr&iacute;a y da vida, transformamos la adversidad en fortaleza y belleza.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="value-icon">
+          <svg viewBox="0 0 36 36" fill="none" stroke="#BE9755" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="18" cy="18" r="11"/>
+            <path d="M18 7 C18 7 11 11 11 18 C11 25 18 29 18 29 C18 29 25 25 25 18 C25 11 18 7 18 7Z"/>
+            <line x1="7" y1="18" x2="29" y2="18"/>
+          </svg>
+        </div>
+        <h3>Sostenibilidad</h3>
+        <p>Ingredientes KM0, vidrio soplado artesanalmente y tapones biodegradables. El planeta primero.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="value-icon">
+          <svg viewBox="0 0 36 36" fill="none" stroke="#BE9755" stroke-width="1.5" stroke-linecap="round">
+            <path d="M8 30 L8 18 Q8 8 18 8 Q28 8 28 18 L28 30"/>
+            <path d="M14 30 L14 20 Q14 14 18 14 Q22 14 22 20 L22 30"/>
+            <line x1="8" y1="30" x2="28" y2="30"/>
+          </svg>
+        </div>
+        <h3>Artesan&iacute;a</h3>
+        <p>Cada frasco, cada textura, nace de manos artesanas que preservan el saber de generaciones.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="value-icon">
+          <svg viewBox="0 0 36 36" fill="none" stroke="#BE9755" stroke-width="1.5" stroke-linecap="round">
+            <path d="M18 32 C18 32 4 24 4 15 C4 10 8 7 12 7 C14.5 7 17 8.5 18 11 C19 8.5 21.5 7 24 7 C28 7 32 10 32 15 C32 24 18 32 18 32Z"/>
+          </svg>
+        </div>
+        <h3>Compromiso Social</h3>
+        <p>El 5% de cada venta va destinado a proyectos de reforestaci&oacute;n y medio ambiente en La Palma.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cita -->
+  <div class="quote-block">
+    <blockquote>
+      &laquo;De la lava nacen historias de renovaci&oacute;n. En cada frasco de VULCAN llevamos contigo la esencia pura de La Palma: <strong>minerales volc&aacute;nicos, texturas &uacute;nicas y una historia de esperanza.</strong>&raquo;
+    </blockquote>
+    <cite>Volcano Science &mdash; La Palma, Canarias</cite>
+  </div>
+
+  <!-- Parallax 2 -->
+  <div class="parallax-block" data-px>
+    <div class="px-bg" style="background-image:url('assets/images/abierto.webp')"></div>
+    <div class="px-dim"></div>
+    <div class="px-content" style="text-align:left;max-width:1240px;width:100%;padding:0 52px;margin:0 auto">
+      <h2 style="text-align:left">VOLCANO<br>SCIENCE</h2>
+      <p style="text-align:left;margin:0">Cada ingrediente, una historia. Cada frasco, una pieza de arte.</p>
+    </div>
+  </div>
+
+  <!-- Social + Vídeo -->
+  <div class="social-strip">
+    <div class="social-strip-inner">
+      <div class="social-strip-text reveal-l">
+        <h3>#JOIN US.<br>BE YOURSELF.<br>SHINE WITH VULCAN.</h3>
+        <span style="font-size:9px;letter-spacing:.3em;color:rgba(237,237,237,.3)">@vulcanvolcanoscience</span>
+      </div>
+      <div class="social-strip-video">
+        <video id="socialVideo" autoplay muted loop playsinline>
+          <source src="assets/video/demo.mp4" type="video/mp4">
+        </video>
+        <button class="sound-btn" id="soundBtn" onclick="toggleSound()">
+          <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path id="soundWave1" d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path id="soundWave2" d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+          <span id="soundLabel">Activar sonido</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parallax 3 -->
+  <div class="parallax-block" data-px style="height:50vh;min-height:320px">
+    <div class="px-bg" style="background-image:url('assets/images/cartel.webp')"></div>
+    <div class="px-dim" style="background:rgba(14,11,9,.38)"></div>
+    <div class="px-content">
+      <h2 style="font-size:clamp(16px,2.5vw,38px);letter-spacing:.28em">LAVA ROOTS &middot; FORCE OF LIFE</h2>
+    </div>
+  </div>
+
+</div><!-- /home -->
+
+<!-- ========================= PRODUCTO ========================= -->
+<div class="page" id="page-producto">
+  <div class="page-hero">
+    <div class="container">
+      <span class="section-label">Volcano Science</span>
+      <h1>La Gama</h1>
+      <p>Cuatro f&oacute;rmulas. Una filosof&iacute;a volc&aacute;nica.</p>
+    </div>
+  </div>
+  <section class="products-full">
+    <div style="max-width:1240px;margin:0 auto;padding:0 52px">
+      <div class="products-full-grid" id="productGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================= MANIFIESTO ========================= -->
+<div class="page" id="page-manifiesto">
+
+  <div class="mani-hero">
+    <div class="mani-hero-bg"></div>
+    <div class="mani-hero-content">
+      <span class="section-label">Manifiesto</span>
+      <h1>RENACER</h1>
+      <p class="lead">&laquo;Somos la fuerza de la naturaleza en su estado puro. Celebramos lo indomable, lo ancestral, lo aut&eacute;ntico.&raquo;</p>
+    </div>
+  </div>
+
+  <!-- Foto 1: CENITAL ISLA — fixed background -->
+  <div class="mani-fixed-img">
+    <div class="bg" style="background-image:url('assets/images/mani-isla.png')"></div>
+    <div class="dim"></div>
+  </div>
+
+  <section class="mani-body">
+    <div class="container">
+
+      <div style="padding:0 0 78px;max-width:680px">
+        <span class="section-label" style="margin-bottom:24px;display:block">Nuestro Origen</span>
+        <h2 style="font-size:clamp(26px,3.5vw,46px);font-weight:300;line-height:1.15;color:#EDEDED;margin-bottom:24px;letter-spacing:.02em">De la <em style="font-style:normal;font-weight:700;color:#BE9755">destrucci&oacute;n</em><br>surge la vida.</h2>
+        <p style="font-size:14px;line-height:1.82;color:rgba(237,237,237,.62);margin-bottom:16px">El 19 de septiembre de 2021, la erupci&oacute;n del volc&aacute;n Tajogaite sacudi&oacute; La Palma. La roca fundida fluy&oacute; desde la cresta de Cumbre Vieja arrasando todo cuanto encontr&oacute; a su paso. Pero tambi&eacute;n sembr&oacute; las semillas de algo nuevo.</p>
+        <p style="font-size:14px;line-height:1.82;color:rgba(237,237,237,.62)">Tres a&ntilde;os despu&eacute;s, VULCAN nace como s&iacute;mbolo de ese renacer: una marca de cosm&eacute;tica volc&aacute;nica que convierte la fuerza de la tierra en belleza.</p>
+      </div>
+
+      <div class="mani-chapter reveal">
+        <span class="chapter-num">01 &mdash; Origen</span>
+        <h2>La tierra que nos da vida</h2>
+        <p>A lo largo de los siglos, los flujos de lava ricos en nutrientes se han descompuesto en suelo f&eacute;rtil. Los volcanes son el alma de las Islas Canarias, y sus erupciones, aunque devastadoras, son actos de renovaci&oacute;n. La tierra se transforma, se enriquece y renace. La lava se convierte en vida, las cenizas en tierra f&eacute;rtil.</p>
+        <p>Tras tres a&ntilde;os de duros trabajos de reconstrucci&oacute;n, creamos VULCAN: una marca de cosm&eacute;tica volc&aacute;nica que surge como s&iacute;mbolo de reinvenci&oacute;n y conexi&oacute;n profunda con la tierra que nos da todo.</p>
+      </div>
+
+      <div class="mani-pull reveal">
+        &laquo;Cada erupci&oacute;n es un acto de renovaci&oacute;n donde la tierra se transforma y, con el tiempo, se enriquece y renace.&raquo;
+      </div>
+
+      <div class="mani-chapter reveal">
+        <span class="chapter-num">02 &mdash; Misi&oacute;n</span>
+        <h2>M&aacute;s que cosm&eacute;tica</h2>
+        <p>Nuestra misi&oacute;n no es solo embellecer. VULCAN existe para ofrecer un retorno a la naturaleza, a la resiliencia de la tierra volc&aacute;nica y a nuestra comunidad. Nuestro taller, enclavado en el sur de La Palma, respira con la energ&iacute;a de un entorno salvaje, donde el tiempo y la naturaleza marcan los ritmos de cada creaci&oacute;n.</p>
+        <p>Cada ingrediente que elegimos no es solo un recurso, sino una historia: minerales volc&aacute;nicos, plantas de temporada e ingredientes 100% sostenibles que se conjugan en frascos &uacute;nicos, elaborados artesanalmente para honrar su esencia. VULCAN revive la tradici&oacute;n boticaria con devoci&oacute;n, recordando que la verdadera alquimia reside en el cuidado y la dedicaci&oacute;n manual.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Foto 3+4: dúo -->
+  <div class="mani-duo">
+    <div class="mani-duo-item"><img src="assets/images/mani-arbol.png" alt="VULCAN"></div>
+    <div class="mani-duo-item"><img src="assets/images/mani-liquen.png" alt="VULCAN"></div>
+  </div>
+
+  <section class="mani-body" style="padding-top:0">
+    <div class="container">
+
+      <div class="values-mani reveal">
+        <div class="vm-item"><h4>Autenticidad</h4><p>Sin artificios. Lo que ves es lo que somos. Una marca nacida de la tierra y para la tierra.</p></div>
+        <div class="vm-item"><h4>Resiliencia</h4><p>Como la lava que se enfr&iacute;a y da vida, transformamos los retos en fortaleza y oportunidad.</p></div>
+        <div class="vm-item"><h4>Sostenibilidad</h4><p>Desde la recogida de ingredientes KM0 hasta el envasado artesanal. Cero compromiso con el planeta.</p></div>
+        <div class="vm-item"><h4>Artesan&iacute;a</h4><p>Vidrio soplado a mano, tapones biodegradables. Cada frasco es una pieza de arte crudo y sofisticado.</p></div>
+        <div class="vm-item"><h4>Regeneraci&oacute;n</h4><p>No solo de la piel. Regeneraci&oacute;n social, econ&oacute;mica y medioambiental del territorio volc&aacute;nico.</p></div>
+        <div class="vm-item"><h4>Compromiso Comunitario</h4><p>Colaboramos con artesanos locales y destinamos parte de los ingresos a la recuperaci&oacute;n de La Palma.</p></div>
+        <div class="vm-item"><h4>Conexi&oacute;n con la Naturaleza</h4><p>Nos guiamos por los ritmos naturales. La tierra volc&aacute;nica es nuestra musa y nuestra responsabilidad.</p></div>
+        <div class="vm-item"><h4>Genderless</h4><p>La belleza volc&aacute;nica no entiende de g&eacute;neros. VULCAN es para todos, sin etiquetas ni fronteras.</p></div>
+      </div>
+
+      <div class="mani-chapter reveal">
+        <span class="chapter-num">03 &mdash; Concepto</span>
+        <h2>El dise&ntilde;o como declaraci&oacute;n</h2>
+        <p>El dise&ntilde;o estructural del packaging est&aacute; creado bajo el concepto de ecodise&ntilde;o, inspirado en las formas piramidales que evocan la geometr&iacute;a de los volcanes. Un packaging que se presenta en dos partes: una base y una tapa. Al extraer la tapa, dejamos al descubierto un interior lleno de impacto, energ&iacute;a y color.</p>
+        <p>Para los tarros hemos trabajado con vidrio soplado artesanalmente y tapones biodegradables. La gama crom&aacute;tica incorpora tonos terrosos y minerales, e incluye acabados en stamping hologr&aacute;fico para integrar todos los colores de la Bandera del Arco&iacute;ris. Nuestros productos son piezas de arte crudo y sofisticado moldeadas sin intervenci&oacute;n industrial.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Manifiesto parallax -->
+  <!-- Foto 2: CENITAL CARRETERA — parallax -->
+  <div class="mani-px" data-px>
+    <div class="mani-px-bg" style="background-image:url('assets/images/mani-carretera.png')"></div>
+    <div class="mani-px-dim"></div>
+    <blockquote>&laquo;Somos la dualidad<br>hecha belleza.<br>Somos VULCAN.&raquo;</blockquote>
+  </div>
+
+  <div class="commit-block">
+    <div class="container">
+      <div class="commit-pct reveal-l">5%</div>
+      <div class="reveal-r">
+        <span class="commit-num">5%</span>
+        <div class="commit-text">
+          <h3>Compromiso con La Palma</h3>
+          <p>El 5% de la venta de cada uno de nuestros productos est&aacute; destinado al Cabildo Insular de La Palma (Departamento de Medio Ambiente), para financiar proyectos de reforestaci&oacute;n y conservaci&oacute;n de los ecosistemas afectados por la erupci&oacute;n.</p>
+          <p>Este compromiso fomenta la creaci&oacute;n de empleos y el apoyo a las comunidades afectadas por el entorno volc&aacute;nico de La Palma.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div><!-- /manifiesto -->
+
+<!-- ========================= CONTACTO ========================= -->
+<div class="page" id="page-contacto">
+  <section class="contacto-pg">
+    <div class="container">
+      <div class="contacto-info reveal-l">
+        <span class="section-label">Contacto</span>
+        <h1>Hablemos</h1>
+        <p>&#191;Tienes preguntas sobre nuestros productos, pedidos al por mayor o deseas colaborar con nosotros? Escr&iacute;benos. Respondemos en menos de 48 horas.</p>
+        <div class="c-details">
+          <div class="c-detail">
+            <span class="dlabel">Email</span>
+            <a href="mailto:hola@vulcanvolcanoscience.com">vulcan@volcanoscience.com</a>
+          </div>
+          <div class="c-detail">
+            <span class="dlabel">Tel&eacute;fono</span>
+            <span>+34 633 53 59 71</span>
+          </div>
+          <div class="c-detail">
+            <span class="dlabel">Ubicaci&oacute;n</span>
+            <span>La Palma, Islas Canarias, Espa&ntilde;a</span>
+          </div>
+          <div class="c-detail" style="margin-top:8px">
+            <span class="dlabel">S&iacute;guenos</span>
+            <div style="display:flex;gap:10px;margin-top:10px">
+              <a href="https://www.instagram.com/the_brandea_lab/" target="_blank" rel="noopener" title="Instagram" class="social-link" style="cursor:none">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://brandea.es/" target="_blank" rel="noopener" title="Web" class="social-link" style="cursor:none">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <img src="assets/images/redes.webp" alt="VULCAN" style="width:100%;margin-top:44px;display:block">
+      </div>
+      <div class="reveal-r">
+        <div class="cform">
+          <form id="contactForm" onsubmit="submitForm(event)">
+            <input type="hidden" name="access_key" value="438331">
+            <input type="hidden" name="subject" value="Nuevo mensaje de contacto — VULCAN Volcano Science">
+            <input type="hidden" name="from_name" value="Web VULCAN">
+            <div class="form-row">
+              <div class="form-group"><label>Nombre</label><input type="text" name="nombre" placeholder="Tu nombre" required></div>
+              <div class="form-group"><label>Apellidos</label><input type="text" name="apellidos" placeholder="Tus apellidos" required></div>
+            </div>
+            <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="tu@email.com" required></div>
+            <div class="form-group"><label>Tel&eacute;fono (opcional)</label><input type="tel" name="telefono" placeholder="+34 000 000 000"></div>
+            <div class="form-group">
+              <label>Asunto</label>
+              <select name="asunto">
+                <option value="">Selecciona un asunto</option>
+                <option>Consulta sobre productos</option>
+                <option>Pedido mayorista</option>
+                <option>Colaboraci&oacute;n / Prensa</option>
+                <option>Distribuci&oacute;n</option>
+                <option>Otra consulta</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Mensaje</label><textarea name="mensaje" placeholder="Cu&eacute;ntanos c&oacute;mo podemos ayudarte..." required></textarea></div>
+            <div class="form-group">
+              <label class="chk-label">
+                <input type="checkbox" required>
+                <span>He le&iacute;do y acepto la <a href="#" onclick="showPage('privacidad');return false">Pol&iacute;tica de Privacidad</a></span>
+              </label>
+            </div>
+            <button type="submit" class="btn-submit" id="btnSubmit">Enviar Mensaje</button>
+          </form>
+          <div class="form-ok" id="formOk">
+            <h3>&#161;Mensaje recibido!</h3>
+            <p>Gracias por contactar con VULCAN. Te responderemos en menos de 48 horas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================= PRIVACIDAD ========================= -->
+<div class="page" id="page-privacidad">
+  <section class="legal-pg">
+    <div class="container">
+      <span class="section-label" style="margin-bottom:18px">Legal</span>
+      <h1>Pol&iacute;tica de Privacidad</h1>
+      <h2>1. Responsable del Tratamiento</h2>
+      <p>VULCAN Volcano Science, La Palma, Islas Canarias, Espa&ntilde;a. Email: privacidad@vulcanvolcanoscience.com</p>
+      <h2>2. Datos que Recopilamos</h2>
+      <p>Recopilamos los datos que nos facilitas a trav&eacute;s del formulario de contacto (nombre, email, tel&eacute;fono y mensaje), as&iacute; como datos de navegaci&oacute;n t&eacute;cnicos para el correcto funcionamiento de la web.</p>
+      <h2>3. Finalidad</h2>
+      <ul>
+        <li>Gestionar consultas y solicitudes de informaci&oacute;n.</li>
+        <li>Procesar pedidos y gestionar la relaci&oacute;n comercial.</li>
+        <li>Enviar comunicaciones comerciales previa obtenci&oacute;n de consentimiento.</li>
+        <li>Cumplir obligaciones legales aplicables.</li>
+      </ul>
+      <h2>4. Base Legal</h2>
+      <p>Tu consentimiento expreso, la ejecuci&oacute;n de un contrato cuando realizas una compra, y el inter&eacute;s leg&iacute;timo para el funcionamiento t&eacute;cnico de la web.</p>
+      <h2>5. Conservaci&oacute;n</h2>
+      <p>Conservaremos tus datos durante el tiempo necesario para la finalidad para la que fueron recogidos y los plazos legalmente establecidos.</p>
+      <h2>6. Tus Derechos</h2>
+      <p>Puedes ejercer derechos de acceso, rectificaci&oacute;n, supresi&oacute;n, oposici&oacute;n y portabilidad escribiendo a privacidad@vulcanvolcanoscience.com.</p>
+      <h2>7. Cookies</h2>
+      <p>Esta web utiliza &uacute;nicamente cookies t&eacute;cnicas imprescindibles para su funcionamiento. No utilizamos cookies de rastreo ni publicidad de terceros.</p>
+      <button class="btn-back" onclick="showPage(lastPage||'home')">Volver</button>
+    </div>
+  </section>
+</div>
+
+<!-- ========================= FAQ ========================= -->
+<div class="page" id="page-faq">
+  <section class="legal-pg">
+    <div class="container">
+      <span class="section-label" style="margin-bottom:18px">Ayuda</span>
+      <h1>Preguntas Frecuentes</h1>
+      <h2>&#191;Qu&eacute; hace &uacute;nicos a los productos VULCAN?</h2>
+      <p>Nuestros productos incorporan ingredientes volc&aacute;nicos extra&iacute;dos de La Palma, combinados con plantas de temporada y materiales KM0, sin intervenci&oacute;n industrial. Su dise&ntilde;o fue reconocido con el Pentaward Bronze 2025.</p>
+      <h2>&#191;Son aptos para todo tipo de piel?</h2>
+      <p>S&iacute;. La gama VULCAN est&aacute; formulada para ser compatible con todo tipo de pieles, incluyendo las m&aacute;s sensibles.</p>
+      <h2>&#191;Son genderless?</h2>
+      <p>Absolutamente. VULCAN nace como marca genderless: la belleza volc&aacute;nica no entiende de g&eacute;neros ni identidades.</p>
+      <h2>&#191;C&oacute;mo realizo un pedido?</h2>
+      <p>A&ntilde;ade los productos a tu carrito y procede al pago. Para pedidos al por mayor, usa el formulario de Contacto.</p>
+      <h2>&#191;Cu&aacute;l es el plazo de env&iacute;o?</h2>
+      <p>3-5 d&iacute;as laborables en Espa&ntilde;a. Internacional: 7-14 d&iacute;as. Env&iacute;o gratuito en pedidos superiores a 80&euro;.</p>
+      <h2>&#191;Puedo devolver un producto?</h2>
+      <p>S&iacute;, en un plazo de 14 d&iacute;as desde la recepci&oacute;n, siempre que el producto est&eacute; sin abrir. Contacta en hola@vulcanvolcanoscience.com.</p>
+      <h2>&#191;El packaging es sostenible?</h2>
+      <p>S&iacute;. Vidrio soplado artesanalmente, tapones biodegradables, principios de ecodise&ntilde;o y programa de recarga disponible.</p>
+      <h2>&#191;A qu&eacute; destina&iacute;s el 5% de las ventas?</h2>
+      <p>Al Cabildo Insular de La Palma (Departamento de Medio Ambiente) para proyectos de reforestaci&oacute;n y conservaci&oacute;n.</p>
+      <h2>&#191;Ten&eacute;is tienda f&iacute;sica?</h2>
+      <p>Operamos online y a trav&eacute;s de tiendas seleccionadas en Las Palmas de Gran Canaria, Santa Cruz de Tenerife y Madrid. Organizamos eventos pop-up regularmente.</p>
+      <button class="btn-back" onclick="showPage(lastPage||'home')">Volver</button>
+    </div>
+  </section>
+</div>
+
+<!-- ========================= TRABAJA ========================= -->
+<div class="page" id="page-trabaja">
+  <section class="legal-pg">
+    <div class="container">
+      <span class="section-label" style="margin-bottom:18px">Equipo</span>
+      <h1>Trabaja con Nosotros</h1>
+      <p>Buscamos personas apasionadas por la naturaleza, la sostenibilidad, la artesan&iacute;a y la belleza aut&eacute;ntica. Si compartes nuestra filosof&iacute;a, este es tu lugar.</p>
+      <h2>&#191;C&oacute;mo somos?</h2>
+      <p>Un equipo peque&ntilde;o, comprometido y volc&aacute;nico trabajando desde La Palma. Valoramos la creatividad, la honestidad y el trabajo bien hecho.</p>
+      <h2>Posiciones Abiertas</h2>
+      <h2 style="font-size:14px;color:#BE9755;letter-spacing:.18em">Community Manager &amp; Social Media</h2>
+      <p>Buscamos a alguien que entienda nuestra voz de marca y sepa traducirla en contenido aut&eacute;ntico para Instagram, TikTok y Pinterest. Experiencia en fotograf&iacute;a de producto valorable.</p>
+      <h2 style="font-size:14px;color:#BE9755;letter-spacing:.18em">T&eacute;cnico/a de Formulaci&oacute;n Cosm&eacute;tica</h2>
+      <p>Para incorporarse a nuestro equipo de I+D en La Palma. Conocimiento de ingredientes naturales y pasi&oacute;n por la cosm&eacute;tica sostenible artesanal.</p>
+      <h2 style="font-size:14px;color:#BE9755;letter-spacing:.18em">Responsable de Distribuci&oacute;n y B2B</h2>
+      <p>Para liderar nuestra expansi&oacute;n en tiendas seleccionadas y mercados internacionales. Experiencia en ventas B2B en belleza o lujo accesible.</p>
+      <h2 style="font-size:14px;color:#BE9755;letter-spacing:.18em">Pr&aacute;cticas &mdash; Dise&ntilde;o Gr&aacute;fico</h2>
+      <p>Colaboraci&oacute;n con el equipo creativo en materiales de marca y packaging. Imprescindible dominio de Figma, Illustrator y Photoshop.</p>
+      <h2>&#191;C&oacute;mo aplicar?</h2>
+      <p>Env&iacute;a CV y carta de motivaci&oacute;n a <a href="mailto:talento@vulcanvolcanoscience.com">talento@vulcanvolcanoscience.com</a> con el asunto &ldquo;Candidatura &mdash; [Posici&oacute;n]&rdquo;.</p>
+      <button class="btn-back" onclick="showPage(lastPage||'home')">Volver</button>
+    </div>
+  </section>
+</div>
+
+<!-- ========================= FOOTER ========================= -->
+<footer id="siteFooter">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="footer-brand-logo" style="margin-bottom:12px">
+          <img src="assets/images/logo_vulcan2.png" alt="VULCAN Volcano Science" style="height:56px;width:auto;filter:brightness(0) invert(1);opacity:.88">
+        </div>
+        <p>Cosm&eacute;tica volc&aacute;nica genderless nacida en La Palma, Espa&ntilde;a. Formulada con ingredientes KM0 y elaborada artesanalmente.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/the_brandea_lab/" target="_blank" rel="noopener" title="Instagram" class="social-link" style="cursor:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://brandea.es/" target="_blank" rel="noopener" title="Web" class="social-link" style="cursor:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegaci&oacute;n</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('home');return false">Home</a></li>
+          <li><a href="#" onclick="showPage('producto');return false">Producto</a></li>
+          <li><a href="#" onclick="showPage('manifiesto');return false">Manifiesto</a></li>
+          <li><a href="#" onclick="showPage('contacto');return false">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>La Gama</h4>
+        <ul>
+          <li><button onclick="showPage('producto')">Eye Contour</button></li>
+          <li><button onclick="showPage('producto')">Facial Serum</button></li>
+          <li><button onclick="showPage('producto')">Active Mask</button></li>
+          <li><button onclick="showPage('producto')">Face Cream</button></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informaci&oacute;n</h4>
+        <ul>
+          <li><button onclick="showPage('privacidad')">Pol&iacute;tica de Privacidad</button></li>
+          <li><button onclick="showPage('faq')">Preguntas Frecuentes</button></li>
+          <li><button onclick="showPage('trabaja')">Trabaja con Nosotros</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 VULCAN Volcano Science. Todos los derechos reservados. La Palma, Islas Canarias, Espa&ntilde;a.</p>
+      <div class="footer-award">
+        <img src="assets/images/pentaward.webp" alt="Pentaward Bronze 2025">
+        <span>Pentaward Bronze 2025</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

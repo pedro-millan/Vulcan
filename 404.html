@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>VULCAN — Volcano Science</title>
+<script>
+  var path = window.location.pathname;
+  // Extrae el segmento de la ruta que corresponde a la sección
+  // Funciona tanto en raíz (username.github.io) como en proyecto (username.github.io/repo)
+  var segments = path.split('/').filter(Boolean);
+  var knownPages = ['home','producto','manifiesto','contacto','privacidad','faq','trabaja'];
+  var page = 'home';
+  for (var i = segments.length - 1; i >= 0; i--) {
+    if (knownPages.indexOf(segments[i]) !== -1) { page = segments[i]; break; }
+  }
+  sessionStorage.setItem('vulcan_redirect', page);
+  // Redirige a la raíz del proyecto manteniendo el origen
+  var base = path.substring(0, path.lastIndexOf('/' + page));
+  window.location.replace(window.location.origin + (base || '/'));
+</script>
+</head>
+<body></body>
+</html>

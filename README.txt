@@ -1,3 +1,61 @@
+VULCAN — Volcano Science							
+================================================
+
+Simulates the official website of VULCAN Volcano Science, a genderless volcanic
+cosmetics brand born in La Palma, Canary Islands.
+
+------------------------------------------------
+PROJECT STRUCTURE
+------------------------------------------------
+
+vulcan-web/
+├── index.html          Main page (SPA with section-based navigation)
+├── 404.html            Custom error page
+├── main.js             Navigation logic, animations and contact form
+├── style.css           Full stylesheet
+└── assets/
+    ├── images/         Images and graphic assets (.png, .webp)
+    └── video/          Background video (demo.mp4)
+
+------------------------------------------------
+SECTIONS
+------------------------------------------------
+
+- Home          Landing with hero, featured products and brand values
+- Product       Full range of 4 volcanic skincare products
+- Manifesto     Brand story, origin and identity
+- Contact       Functional form with real email delivery via Web3Forms
+- Privacy       Privacy policy
+- FAQ           Frequently asked questions
+- Work with us  Careers / join the team
+
+------------------------------------------------
+CONTACT FORM
+------------------------------------------------
+
+The contact form uses Web3Forms (https://web3forms.com) to handle email
+delivery without requiring a backend.
+
+------------------------------------------------
+TECH STACK
+------------------------------------------------
+
+- HTML5, CSS3, JavaScript (vanilla, no frameworks)
+- Web3Forms (form submission)
+- Fonts: Google Fonts
+- Hosting: GitHub Pages
+
+------------------------------------------------
+AUTHOR
+------------------------------------------------
+
+Creator and designer - Andrea Muñoz Rubio
+Web developer — Pedro Millán
+
+
+************************************************
+
+
 VULCAN — Volcano Science
 ================================================
 

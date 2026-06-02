@@ -158,7 +158,7 @@ nav.scrolled{background:rgba(14,11,9,.9);backdrop-filter:blur(18px);border-botto
   transition:background .3s;
 }
 .award-card:hover{background:#131110}
-.award-img{width:96px;height:96px;object-fit:contain;flex-shrink:0;transition:filter .3s;filter:brightness(.85)}
+.award-img,.award-img2{width:min(326px,38%);height:auto;aspect-ratio:1/1;object-fit:contain;flex-shrink:0;transition:filter .3s;filter:brightness(.85)}
 .award-card:hover .award-img{filter:brightness(1)}
 .award-info .alabel{font-size:8px;letter-spacing:.5em;color:#BE9755;text-transform:uppercase;margin-bottom:10px;display:block}
 .award-info h3{font-size:21px;font-weight:600;color:#EDEDED;margin-bottom:8px;letter-spacing:.04em}
@@ -497,6 +497,7 @@ footer{background:#241915;padding:76px 0 36px;border-top:1px solid rgba(190,151,
   .container{padding:0 24px}
   .narrative .container,.commit-block .container,.contacto-pg .container{grid-template-columns:1fr;gap:44px}
   .awards-grid-home,.products-full-grid{grid-template-columns:1fr}
+  .award-card{padding:40px 28px;gap:24px}
   .products-grid{grid-template-columns:1fr 1fr}
   .values-grid{grid-template-columns:1fr 1fr}
   .footer-main{grid-template-columns:1fr 1fr;gap:28px}
@@ -515,4 +516,6 @@ footer{background:#241915;padding:76px 0 36px;border-top:1px solid rgba(190,151,
   .values-grid{grid-template-columns:1fr}
   .footer-main{grid-template-columns:1fr}
   .values-mani{grid-template-columns:1fr}
+  .award-card{flex-direction:column;align-items:flex-start;padding:36px 24px;gap:20px}
+  .award-img,.award-img2{width:100%;max-width:260px;aspect-ratio:1/1}
 }
